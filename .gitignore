@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# QGIS autosave / backups
+*.qgz~
+*.qgs~
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# QGIS auxiliary storage
+*.qgd
+
+# Large raw imagery / rasters - add manually only when intended
+*.tif
+*.tiff
+*.ecw
+*.jp2
+*.las
+*.laz
+
+# Python later
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Large raw GIS datasets
+01_south_florida_qgis_map/data_raw/GeoStreets_gdb_3900633969641609277.geojson
+
+# Personal/private notes
+01_south_florida_qgis_map/notes/6:9.txt
