@@ -13,6 +13,9 @@
 # QGIS auxiliary storage
 *.qgd
 
+# QGIS auxiliary files
+*.aux.xml
+
 # Large raw imagery / rasters - add manually only when intended
 *.tif
 *.tiff
@@ -31,7 +34,7 @@ venv/
 # Large raw GIS datasets
 01_south_florida_qgis_map/data_raw/GeoStreets_gdb_3900633969641609277.geojson
 
-# Large dataset
+# Raw drone imagery
 02_photogrammetry/data/raw/
 
 # Personal/private notes
