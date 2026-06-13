@@ -13,7 +13,7 @@
         "outputs": "Site context map, buffers, styled vector layers",
         "repo_path": "Project 01 repo folder",
         "repo_url": "https://github.com/jrangamar/drone-gis-portfolio/tree/main/01_south_florida_qgis_map",
-        "preview_image": "../data/previews/arch_creek_map.png",
+        "preview_image": "data/previews/arch_creek_map.png",
         "preview_alt": "Arch Creek Park QGIS context map preview"
       },
       "geometry": {
@@ -35,19 +35,19 @@
         "repo_url": "https://github.com/jrangamar/drone-gis-portfolio/tree/main/02_photogrammetry",
         "preview_images": [
   {
-    "src": "../data/previews/sand_key_orthophoto.png",
+    "src": "data/previews/sand_key_orthophoto.png",
     "alt": "Sand Key orthophoto preview"
   },
   {
-    "src": "../data/previews/dsm.png",
+    "src": "data/previews/dsm.png",
     "alt": "DSM preview"
   },
   {
-    "src": "../data/previews/hillshade_qgis.png",
+    "src": "data/previews/hillshade_qgis.png",
     "alt": "Hillshade preview"
   },
   {
-    "src": "../data/previews/sand_key_point_cloud.png",
+    "src": "data/previews/sand_key_point_cloud.png",
     "alt": "Sand Key point cloud preview"
   }
   
@@ -72,23 +72,23 @@
         "repo_url": "https://github.com/jrangamar/drone-gis-portfolio/tree/main/02_photogrammetry",
         "preview_images": [
   {
-    "src": "../data/previews/helenenschacht_orthophoto.png",
+    "src": "data/previews/helenenschacht_orthophoto.png",
     "alt": "Helenenschacht orthophoto preview"
   },
   {
-    "src": "../data/previews/helenenschacht_dsm.png",
+    "src": "data/previews/helenenschacht_dsm.png",
     "alt": "Helenenschacht DSM preview"
   },
   {
-    "src": "../data/previews/helenenschacht_hillshade.png",
+    "src": "data/previews/helenenschacht_hillshade.png",
     "alt": "Helenenschacht hillshade preview"
   },
   {
-    "src": "../data/previews/slope_contours_1m.png",
+    "src": "data/previews/slope_contours_1m.png",
     "alt": "Slope with 1 meter contours preview"
   },
   {
-    "src": "../data/previews/helenenschacht_point_cloud.png",
+    "src": "data/previews/helenenschacht_point_cloud.png",
     "alt": "Helenenschacht point cloud preview"
   }
   
