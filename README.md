@@ -6,7 +6,7 @@ The projects progress from desktop GIS and cartographic analysis, through photog
 
 ## Live Interactive Viewer
 
-[Open the interactive geospatial viewer](https://jrangamar.github.io/drone-gis-portfolio/)
+[Open the interactive geospatial viewer](https://jrangamar.github.io/drone-remotesensing-gis-portfolio/)
 
 ## Project Overview
 
@@ -78,7 +78,7 @@ Project directory:
 
 Live site:
 
-[https://jrangamar.github.io/drone-gis-portfolio/](https://jrangamar.github.io/drone-gis-portfolio/)
+[https://jrangamar.github.io/drone-remotesensing-gis-portfolio/](jrangamar.github.io/drone-remotesensing-gis-portfolio/)
 
 ## Portfolio Progression
 
