@@ -1,0 +1,18 @@
+.venv/
+.DS_Store
+__pycache__/
+*.pyc
+
+data/raw/*
+!data/raw/README.md
+
+*.qgz~
+*.gpkg-wal
+*.gpkg-shm
+*.aux.xml
+*.qmd
+
+# Large reproducible intermediate rasters
+data/processed/estimated_floor_plane.tif
+data/processed/height_above_floor_full.tif
+data/processed/height_above_constant_floor_full.tif

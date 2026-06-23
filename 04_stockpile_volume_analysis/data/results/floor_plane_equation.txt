@@ -1,0 +1,4 @@
+Fitted bay-floor plane
+z = (0.020881284358 * x) + (-0.004845953072 * y) + (-324.947153669248)
+RMSE_m = 0.026651
+Sample_count = 6
