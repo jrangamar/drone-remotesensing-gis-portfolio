@@ -1,0 +1,8 @@
+P02 least-squares plane fitted to cleaned perimeter controls
+z = (-0.005861239603 * x) + (-0.004727344370 * y) + (1463.549150220370)
+control_points = 533
+rank = 3
+rmse_m = 0.139218
+mae_m = 0.108203
+residual_min_m = -0.500954
+residual_max_m = 0.361967

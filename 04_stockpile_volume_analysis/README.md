@@ -1,14 +1,24 @@
 # Stockpile Volume and Cross-Section Analysis
 
-A QGIS and Python workflow for estimating the volume of a contained aggregate stockpile from a public orthomosaic and digital surface model (DSM).
+A QGIS and Python workflow for estimating stockpile volume from a public orthomosaic and digital surface model (DSM), with two contrasting stockpile cases:
 
-The project reconstructs an estimated bay floor from exposed ground samples, calculates stockpile height above that floor, integrates positive raster heights to estimate volume, and checks how sensitive the result is to alternative floor and boundary assumptions.
+- **P01:** a small aggregate pile contained by retaining walls, modeled with a least-squares sloping floor plane.
+- **P02:** a large freestanding aggregate pile, modeled with a cleaned perimeter-based triangulated irregular network (TIN).
+
+The project demonstrates stockpile-boundary interpretation, local base-surface reconstruction, raster subtraction, volume integration, cross-section extraction, and sensitivity testing for alternative modeling assumptions.
 
 > **Demonstration project:** This is a portfolio analysis using public sample data. It is not a certified survey, inventory report, or commercial deliverable.
 
-## Final result
+## Results overview
 
-![P01 stockpile height and volume map](exports/stockpile_height_map.png)
+| Pile | Primary base model | Footprint area | Mean positive height | Maximum height | Estimated volume |
+|---|---|---:|---:|---:|---:|
+| P01 | Least-squares sloping plane | 75.70 m² | 1.59 m | 2.89 m | 120.55 m³ / 157.67 yd³ |
+| P02 | Cleaned perimeter TIN | 1,207.32 m² | 3.67 m | 10.74 m | 4,412.86 m³ / 5,771.80 yd³ |
+
+## P01 — Contained stockpile
+
+![P01 stockpile height and volume map](exports/p01_stockpile_height_map.png)
 
 ### Primary estimate
 
@@ -20,82 +30,50 @@ The project reconstructs an estimated bay floor from exposed ground samples, cal
 | Estimated volume | 120.55 m³ |
 | Estimated volume | 157.67 yd³ |
 
-The primary result uses a least-squares sloping plane fitted from six exposed-floor samples around the stockpile bay.
+The primary P01 result uses a least-squares sloping plane fitted from six exposed-floor samples around the stockpile bay.
 
-## Cross-sections
+### P01 cross-sections
 
-### Section A–A′ — Longitudinal
+#### Section A–A′ — Longitudinal
 
-![Longitudinal cross-section](exports/profile_longitudinal.png)
+![P01 longitudinal cross-section](exports/p01_profile_longitudinal.png)
 
 The longitudinal section runs from the open toe toward the rear wall contact. It shows a gradual rise to the highest part of the pile and a longer descending slope toward the contained end of the bay.
 
-### Section B–B′ — Transverse
+#### Section B–B′ — Transverse
 
-![Transverse cross-section](exports/profile_transverse.png)
+![P01 transverse cross-section](exports/p01_profile_transverse.png)
 
 The transverse section crosses the broad upper portion of the stockpile from a wall-contact side toward the open-side toe. The estimated floor rises gently across the section.
 
-## Method
+### P01 method
 
-### 1. Select the target stockpile
-
-A single stockpile was chosen from the supplied Zeebrugge stockpile dataset. The selected pile is contained by retaining walls on three sides and has an exposed toe at the bay entrance.
-
-A custom `target_stockpile_boundary` polygon was digitized to represent the visible pile footprint while excluding the retaining walls and obvious surrounding floor.
-
-### 2. Sample the exposed bay floor
-
-Six polygons were drawn over exposed floor near the pile. Areas with obvious spilled aggregate, wall structures, and strong tire disturbance were avoided where possible.
-
-Zonal statistics from the DSM were calculated for each sample polygon. The sample means ranged from approximately 6.23 to 6.37 m, while within-sample standard deviations remained small. This indicated a modest spatial grade rather than one perfectly horizontal floor elevation.
-
-### 3. Fit a sloping floor plane
-
-Centroids were created for the six floor samples, and their projected X and Y coordinates were paired with mean DSM elevation. A least-squares plane was fitted in Python:
+1. A custom stockpile-footprint polygon was digitized while excluding retaining walls and obvious surrounding floor.
+2. Six exposed-floor sample polygons were drawn around the bay entrance.
+3. Zonal statistics were calculated for each sample area.
+4. A least-squares plane was fitted to the sample centroids and mean elevations:
 
 ```text
 z = (0.020881284358 × x) + (-0.004845953072 × y) - 324.947153669248
 ```
 
-The plane-fit RMSE was approximately 0.027 m.
+The fitted plane had an RMSE of approximately **0.027 m**.
 
-The fitted equation was evaluated across the DSM grid to create `estimated_floor_plane.tif`.
-
-### 4. Calculate height above the estimated floor
-
-The floor raster was subtracted from the DSM:
+5. The floor plane was evaluated across the DSM grid.
+6. Height above floor was calculated as:
 
 ```text
 height above floor = DSM − estimated floor plane
 ```
 
-The result was clipped to the custom stockpile boundary. Small negative values near the toe were interpreted as local surface noise, boundary uncertainty, or minor mismatch in the reconstructed floor and were clamped to zero before volume integration.
-
-### 5. Calculate volume
-
-The DSM has a 0.02 m pixel size, giving each pixel an area of 0.0004 m².
-
-Volume was calculated as:
+7. Small negative values were clamped to zero before volume integration.
+8. Volume was calculated from the 0.02 m DSM pixels:
 
 ```text
-volume = sum of positive pixel heights × pixel area
+volume = sum of positive pixel heights × 0.0004 m²
 ```
 
-This produced the primary estimate of **120.55 m³**.
-
-### 6. Generate cross-sections
-
-Two profile lines were digitized through the pile:
-
-- `P01_LONG` / Section A–A′: longitudinal profile
-- `P01_CROSS` / Section B–B′: transverse profile
-
-Points were generated every 0.10 m along each line. DSM elevation, estimated floor elevation, and positive stockpile height were sampled to those points and plotted with Matplotlib.
-
-## Sensitivity checks
-
-The analysis compares the primary model against two alternatives while changing one assumption at a time.
+### P01 sensitivity checks
 
 | Scenario | Footprint area | Volume | Difference from primary |
 |---|---:|---:|---:|
@@ -103,19 +81,96 @@ The analysis compares the primary model against two alternatives while changing 
 | Constant floor + custom boundary | 75.70 m² | 112.20 m³ | −6.93% |
 | Sloping floor + supplied perimeter | 73.44 m² | 117.86 m³ | −2.23% |
 
-### Base-surface sensitivity
+The constant-floor comparison showed that base-surface reconstruction had a larger effect than the supplied-versus-custom boundary comparison for P01.
 
-A horizontal floor at the mean elevation of the six floor samples produced **112.20 m³**, approximately **6.93% lower** than the sloping-plane estimate.
+## P02 — Freestanding stockpile
 
-The constant-floor model also produced more negative pixels before clamping and a larger negative minimum. This suggests that the sloping plane better represents the observed grade around this bay, while also showing that floor reconstruction has a meaningful influence on the volume estimate.
+![P02 stockpile height and volume map](exports/p02_stockpile_height_map.png)
 
-### Boundary sensitivity
+P02 extends the workflow to a much larger freestanding pile and tests whether a perimeter-based TIN can provide a more locally responsive buried-base model than a single fitted plane.
 
-Using the supplied Virtual Surveyor perimeter with the same sloping floor produced **117.86 m³**, approximately **2.23% lower** than the custom-boundary result.
+### Primary estimate
 
-The supplied perimeter was smoother and slightly more conservative. Its footprint area was about 2.98% smaller, while the volume difference was smaller because much of the excluded area occurred near the shallow toe.
+| Metric | Result |
+|---|---:|
+| Footprint area | 1,207.32 m² |
+| Positive-area coverage | 1,202.26 m² |
+| Mean positive height | 3.67 m |
+| Maximum height | 10.74 m |
+| Estimated volume | 4,412.86 m³ |
+| Estimated volume | 5,771.80 yd³ |
 
-Neither alternate model is treated as ground truth. The comparisons quantify how model choices affect the result.
+### Boundary controls and anomaly review
+
+The P02 perimeter was sampled every 0.25 m, producing 546 DSM-elevation samples. The perimeter profile was reviewed against the orthophoto and hillshade before interpolation.
+
+Most local elevation changes were retained because they corresponded to real yard or toe conditions, including:
+
+- a drainage depression near the concrete platform;
+- disturbed ground and heavy-equipment ruts;
+- rough but continuous toe transitions;
+- local moisture or material differences.
+
+A short interval affected by an exposed chain/equipment artifact was excluded from the TIN controls. The cleaned control layer contained **533 points**.
+
+![P02 boundary elevation profile](exports/p02_boundary_elevation_profile.png)
+
+### Perimeter-TIN base
+
+The cleaned perimeter points were triangulated with linear interpolation and rasterized to the DSM grid inside the P02 footprint.
+
+The resulting TIN base ranged from approximately **5.11 to 6.09 m**. Because the model is piecewise planar, triangular facets remain visible in the base raster; these are an inherent feature of the interpolation method rather than an error.
+
+The primary P02 height model was calculated as:
+
+```text
+height above TIN = DSM − estimated perimeter TIN
+```
+
+Before clamping:
+
+- 12,662 pixels were negative;
+- negatives represented about 0.42% of valid pixels;
+- the minimum residual was approximately −0.129 m.
+
+The limited number and depth of negative residuals supported use of the perimeter TIN as the primary P02 base model.
+
+### P02 cross-sections
+
+#### Section C–C′ — Longitudinal
+
+![P02 longitudinal cross-section](exports/p02_profile_longitudinal.png)
+
+The longitudinal profile follows the main ridge direction and shows a broad crest with a maximum sampled height of approximately 10.64 m above the estimated TIN base.
+
+#### Section D–D′ — Transverse
+
+![P02 transverse cross-section](exports/p02_profile_transverse.png)
+
+The transverse profile crosses the broad central body of the pile and captures both the principal crest and a smaller secondary lobe.
+
+### P02 fitted-plane sensitivity check
+
+A least-squares plane was fitted to the same 533 cleaned perimeter controls:
+
+```text
+z = (-0.005861239603 × x) + (-0.004727344370 × y) + 1463.549150220370
+```
+
+The fitted plane had:
+
+- RMSE: 0.139 m
+- MAE: 0.108 m
+- residual range: −0.501 m to +0.362 m
+
+The plane produced a tighter base-elevation range of approximately **5.50 to 5.83 m**, but it did not preserve the local drainage and yard-grade variation represented by the TIN.
+
+| P02 base model | Volume | Difference from TIN | Negative pixels | Minimum residual |
+|---|---:|---:|---:|---:|
+| Cleaned perimeter TIN | 4,412.86 m³ | — | 12,662 | −0.129 m |
+| Least-squares plane | 4,493.58 m³ | +1.83% | 41,915 | −0.503 m |
+
+The fitted plane increased volume by **80.72 m³** but produced substantially more and deeper negative residuals. The perimeter TIN was therefore retained as the primary P02 model, while the plane result is reported as a sensitivity case.
 
 ## Tools
 
@@ -126,6 +181,10 @@ Neither alternate model is treated as ground truth. The comparisons quantify how
 - pandas
 - Rasterio
 - Matplotlib
+- SciPy
+- GeoPandas
+- Shapely
+- PyProj
 - GeoPackage
 
 ## Repository structure
@@ -133,20 +192,27 @@ Neither alternate model is treated as ground truth. The comparisons quantify how
 ```text
 04_stockpile_volume_analysis/
 ├── data/
-│   ├── raw/                 # Source-data notes; large raw files are not intended for Git
-│   ├── processed/           # GeoPackage and derived rasters
+│   ├── raw/                 # Source-data notes; large raw files are excluded from Git
+│   ├── processed/           # Shared GeoPackage and derived rasters
 │   └── results/             # CSV and text analysis outputs
-├── exports/                 # Final map and cross-section figures
+├── exports/                 # Final maps, profiles, and diagnostic figures
 ├── notes/                   # Working notes
 ├── project/                 # QGIS project file
 ├── screenshots/             # Selected workflow screenshots
 ├── scripts/
-│   ├── fit_floor_plane.py
-│   ├── create_floor_raster.py
-│   ├── calculate_stockpile_volume.py
-│   ├── calculate_constant_floor_volume.py
-│   ├── calculate_supplied_boundary_volume.py
-│   └── plot_cross_sections.py
+│   ├── p01_fit_floor_plane.py
+│   ├── p01_create_floor_raster.py
+│   ├── p01_calculate_stockpile_volume.py
+│   ├── p01_calculate_constant_floor_volume.py
+│   ├── p01_calculate_supplied_boundary_volume.py
+│   ├── p01_plot_cross_sections.py
+│   ├── p02_plot_boundary_profile.py
+│   ├── p02_build_tin_base.py
+│   ├── p02_calculate_tin_volume.py
+│   ├── p02_fit_plane.py
+│   ├── p02_create_plane_raster.py
+│   ├── p02_calculate_plane_volume.py
+│   └── p02_plot_cross_sections.py
 ├── README.md
 └── requirements.txt
 ```
@@ -161,17 +227,29 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-The scripts depend on intermediate files created in QGIS, including the exported floor-sample centroid CSV, clipped height rasters, and sampled profile CSV.
+The scripts depend on intermediate files created in QGIS, including exported control-point CSVs, GeoPackage layers, and sampled profile CSVs.
 
-Run the Python stages from the project root:
+### P01 sequence
 
 ```bash
-python scripts/fit_floor_plane.py
-python scripts/create_floor_raster.py
-python scripts/calculate_stockpile_volume.py
-python scripts/calculate_constant_floor_volume.py
-python scripts/calculate_supplied_boundary_volume.py
-python scripts/plot_cross_sections.py
+python scripts/p01_fit_floor_plane.py
+python scripts/p01_create_floor_raster.py
+python scripts/p01_calculate_stockpile_volume.py
+python scripts/p01_calculate_constant_floor_volume.py
+python scripts/p01_calculate_supplied_boundary_volume.py
+python scripts/p01_plot_cross_sections.py
+```
+
+### P02 sequence
+
+```bash
+python scripts/p02_plot_boundary_profile.py
+python scripts/p02_build_tin_base.py
+python scripts/p02_calculate_tin_volume.py
+python scripts/p02_fit_plane.py
+python scripts/p02_create_plane_raster.py
+python scripts/p02_calculate_plane_volume.py
+python scripts/p02_plot_cross_sections.py
 ```
 
 ## Data source
@@ -180,52 +258,18 @@ The source data comes from the public **Stockpiles** sample dataset provided by 
 
 - Dataset page: https://support.virtual-surveyor.com/support/solutions/articles/1000310553-download-sample-datasets#Stockpiles
 - Data credit listed by Virtual Surveyor: GeoID
-- Source dataset purpose: stockpile inventory demonstration
+- Source-dataset purpose: stockpile inventory demonstration
 
-Large source rasters are not required to be committed to this repository. See `data/raw/README.md` for acquisition and placement notes.
+Large source rasters are not committed to this repository. See `data/raw/README.md` for acquisition and placement notes.
 
 ## Limitations
 
-- The reconstructed floor is inferred from six exposed-floor samples rather than direct measurements beneath the pile.
-- The stockpile footprint is manually interpreted from imagery and surface shape.
-- The workflow measures visible surface geometry; it does not verify material composition, density, moisture, or commercial suitability.
-- Retaining-wall contacts limit the ability to observe a natural toe on all sides.
-- The sensitivity checks compare plausible modeling choices but do not establish absolute survey accuracy.
+- Both buried base surfaces are inferred rather than directly observed beneath the stockpiles.
+- Stockpile footprints are manually interpreted from imagery and surface shape.
+- The P01 retaining-wall contacts limit observation of a natural toe on three sides.
+- The P02 perimeter TIN contains visible piecewise-planar facets because it is based on boundary controls rather than interior ground observations.
+- A chain/equipment artifact was excluded from the P02 base controls, but embedded equipment inside the pile footprint was not separately removed from the observed DSM and may cause a small positive bias.
+- Heavy-equipment disturbance, ruts, drainage features, and localized moisture differences affect the visible perimeter surface.
+- The workflow measures visible surface geometry; it does not verify material composition, density, moisture content, or commercial suitability.
+- Sensitivity checks compare plausible modeling choices but do not establish absolute survey accuracy.
 - No independent ground-control, check-point, or certified survey validation was available for this portfolio exercise.
-
-# Raw data
-
-The raw source files for this project come from the public **Stockpiles** sample dataset published by Virtual Surveyor.
-
-Dataset page:
-https://support.virtual-surveyor.com/support/solutions/articles/1000310553-download-sample-datasets#Stockpiles
-
-Virtual Surveyor describes the dataset as a drone-data example for executing stockpile inventory and lists GeoID as the data provider.
-
-## Expected local placement
-
-The analysis was developed with the source files stored beneath:
-
-```text
-data/raw/virtual_surveyor_stockpiles/Stockpiles/
-```
-
-The principal inputs are:
-
-```text
-Zeebrugge Stocks.Ii.tif   # Orthophoto / RGB imagery
-Zeebrugge Stocks.Ei.tif   # Elevation raster / DSM
-```
-
-The supplied perimeter data was also imported into QGIS for the boundary-sensitivity comparison.
-
-## Repository policy
-
-The large downloaded source files should remain local and should not be committed to Git unless their redistribution terms and repository-size implications have been reviewed.
-
-This README preserves:
-
-- the source URL;
-- expected local directory structure;
-- key input filenames;
-- enough information for another user to reacquire the public sample dataset.

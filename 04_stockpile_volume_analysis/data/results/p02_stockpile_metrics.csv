@@ -1,0 +1,2 @@
+pile_id,base_model,valid_pixel_count,positive_pixel_count,pixel_area_m2,footprint_area_m2,positive_area_m2,mean_positive_height_m,maximum_height_m,volume_m3,volume_yd3,negative_pixel_count_before_clamp,minimum_height_before_clamp_m
+P02,perimeter_tin,3018306,3005644,0.0004000000000000197,1207.3224000000594,1202.2576000000593,3.6704779448382343,10.736352920532227,4412.860004814365,5771.802979270152,12662,-0.1288156509399414

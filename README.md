@@ -82,25 +82,28 @@ Live site:
 
 ### 04 — Stockpile Volume and Cross-Section Analysis
 
-A QGIS and Python workflow for estimating the volume of a contained aggregate stockpile from a public orthomosaic and digital surface model.
+A QGIS and Python workflow for estimating stockpile volume from a public orthomosaic and digital surface model, using two contrasting aggregate piles.
 
 The project demonstrates:
 
 - Manual stockpile-footprint interpretation
-- Exposed-floor sampling and zonal statistics
+- Exposed-floor and perimeter-elevation sampling
 - Least-squares reconstruction of a sloping bay floor
+- Perimeter-based TIN reconstruction for a large freestanding pile
+- Review and exclusion of non-ground elevation artifacts
 - Raster subtraction and positive-height integration
 - Stockpile volume estimation in cubic metres and cubic yards
-- Sensitivity testing for alternative floor and boundary assumptions
+- Sensitivity testing for alternative base surfaces and boundaries
 - Longitudinal and transverse profile extraction
 - Matplotlib cross-section plotting
-- Final cartographic layout and technical documentation
+- Final cartographic layouts and technical documentation
 
-Primary estimate:
+Primary results:
 
-- Footprint area: 75.70 m²
-- Maximum height: 2.89 m
-- Estimated volume: 120.55 m³ / 157.67 yd³
+- **P01 — contained stockpile:** 75.70 m² footprint, 2.89 m maximum height, and 120.55 m³ / 157.67 yd³ estimated volume using a fitted sloping floor plane.
+- **P02 — freestanding stockpile:** 1,207.32 m² footprint, 10.74 m maximum height, and 4,412.86 m³ / 5,771.80 yd³ estimated volume using a cleaned perimeter TIN.
+
+The P02 fitted-plane sensitivity case produced 4,493.58 m³, a difference of +1.83% from the primary TIN estimate.
 
 Project directory:
 
@@ -112,15 +115,15 @@ Project directory:
 
 ```text
 QGIS mapping and cartography
-      ↓
+      ↓ƒ
 Drone photogrammetry processing
       ↓
 Python and web geospatial publishing
       ↓
-Raster-based volume analysis and uncertainty checks
+Raster-based volume analysis, surface reconstruction, and uncertainty checks
 ```
 
-Together, these projects demonstrate a workflow that moves from spatial data preparation and cartography to imagery processing, public-facing presentation, quantitative surface analysis, and reproducible technical reporting.
+Together, these projects demonstrate a workflow that moves from spatial data preparation and cartography to imagery processing, public-facing presentation, quantitative surface reconstruction, uncertainty analysis, and reproducible technical reporting.
 
 ## Repository Structure
 
