@@ -2,7 +2,7 @@
 
 A portfolio of GIS, photogrammetry, and geospatial web-publishing projects focused on drone imagery, spatial analysis, and reproducible technical workflows.
 
-The projects progress from desktop GIS and cartographic analysis, through photogrammetry processing, to Python-based interactive publishing.
+The projects progress from desktop GIS and cartographic analysis, through photogrammetry processing and interactive web publishing, to raster-based stockpile volume analysis with QGIS and Python.
 
 ## Live Interactive Viewer
 
@@ -78,19 +78,49 @@ Project directory:
 
 Live site:
 
-[https://jrangamar.github.io/drone-remotesensing-gis-portfolio/](jrangamar.github.io/drone-remotesensing-gis-portfolio/)
+[https://jrangamar.github.io/drone-remotesensing-gis-portfolio/](https://jrangamar.github.io/drone-remotesensing-gis-portfolio/)
+
+### 04 — Stockpile Volume and Cross-Section Analysis
+
+A QGIS and Python workflow for estimating the volume of a contained aggregate stockpile from a public orthomosaic and digital surface model.
+
+The project demonstrates:
+
+- Manual stockpile-footprint interpretation
+- Exposed-floor sampling and zonal statistics
+- Least-squares reconstruction of a sloping bay floor
+- Raster subtraction and positive-height integration
+- Stockpile volume estimation in cubic metres and cubic yards
+- Sensitivity testing for alternative floor and boundary assumptions
+- Longitudinal and transverse profile extraction
+- Matplotlib cross-section plotting
+- Final cartographic layout and technical documentation
+
+Primary estimate:
+
+- Footprint area: 75.70 m²
+- Maximum height: 2.89 m
+- Estimated volume: 120.55 m³ / 157.67 yd³
+
+Project directory:
+
+```text
+04_stockpile_volume_analysis/
+```
 
 ## Portfolio Progression
 
 ```text
-QGIS mapping
+QGIS mapping and cartography
       ↓
-Photogrammetry processing
+Drone photogrammetry processing
       ↓
 Python and web geospatial publishing
+      ↓
+Raster-based volume analysis and uncertainty checks
 ```
 
-Together, these projects demonstrate a workflow that moves from spatial data preparation and analysis to imagery processing and public-facing presentation.
+Together, these projects demonstrate a workflow that moves from spatial data preparation and cartography to imagery processing, public-facing presentation, quantitative surface analysis, and reproducible technical reporting.
 
 ## Repository Structure
 
@@ -99,6 +129,7 @@ GIS_portfolio/
 ├── 01_south_florida_qgis_map/
 ├── 02_photogrammetry/
 ├── 03_interactive_geospatial_viewer/
+├── 04_stockpile_volume_analysis/
 ├── .github/
 │   └── workflows/
 ├── .gitignore
@@ -110,6 +141,11 @@ Each project directory contains its own documentation, data organization, script
 ## Tools and Technologies
 
 - QGIS
+- GDAL
+- Rasterio
+- NumPy
+- pandas
+- Matplotlib
 - Python
 - GeoPandas
 - Folium
@@ -142,10 +178,14 @@ This repository currently focuses on:
 
 - GIS mapping and cartography
 - Drone photogrammetry
-- Raster and vector output review
+- Raster and vector analysis
+- Terrain and surface-product review
 - Interactive geospatial publishing
+- Stockpile volume estimation
+- Cross-section analysis
+- Sensitivity testing for modeling assumptions
 
-Possible future work may explore remote-sensing analysis, point-cloud inspection, and 3D geospatial visualization.
+Possible future work may explore point-cloud inspection, LiDAR processing, additional remote-sensing methods, and 3D geospatial visualization.
 
 ## Author
 
