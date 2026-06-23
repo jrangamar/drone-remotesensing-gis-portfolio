@@ -2,11 +2,11 @@
 
 A browser-based geospatial portfolio viewer built with Python, Folium, GeoPandas, GeoJSON, and Leaflet.
 
-This project publishes selected outputs from earlier GIS and photogrammetry work as an interactive static website. It combines project locations, mapped site boundaries, image previews, and short project summaries in a single interface that can be hosted through GitHub Pages.
+This project publishes selected outputs from the portfolio's GIS, photogrammetry, and raster-based stockpile analysis work as an interactive static website. It combines project locations, mapped site boundaries, image previews, and short project summaries in a single interface hosted through GitHub Pages.
 
 ## Live Demo
 
-(https://jrangamar.github.io/drone-gis-portfolio/)
+[Open the live interactive viewer](https://jrangamar.github.io/drone-remotesensing-gis-portfolio/)
 
 ## Project Goals
 
@@ -23,6 +23,7 @@ The project extends the earlier portfolio work:
 - **Project 01:** QGIS site-context mapping
 - **Project 02:** WebODM photogrammetry processing and raster/vector analysis
 - **Project 03:** Python-based interactive geospatial publishing
+- **Project 04:** Raster-based stockpile volume and cross-section analysis
 
 ## Included Projects
 
@@ -37,6 +38,10 @@ A WebODM photogrammetry case study based on a coastal dataset. Outputs include a
 ### Helenenschacht
 
 A WebODM photogrammetry case study based on an industrial structure dataset. The workflow included reconstruction, troubleshooting an out-of-memory failure during meshing, Docker resource adjustment, QGIS review, contours, hillshade, orthophoto, and point-cloud previews.
+
+### Zeebrugge Stockpile Analysis
+
+A QGIS and Python workflow for estimating stockpile volumes from a public orthomosaic and DSM. The project includes fitted base surfaces, raster subtraction, sensitivity testing, and longitudinal cross-section analysis for two stockpiles.
 
 ## Viewer Features
 
@@ -166,10 +171,6 @@ The publishable site is located in:
 03_interactive_geospatial_viewer/web/
 ```
 
-Because this directory is nested inside the repository, GitHub Pages should be configured through a GitHub Actions workflow that uploads this folder as the Pages artifact.
-
-After deployment, add the live URL near the top of this README.
-
 ## Data and Asset Notes
 
 The repository includes lightweight project summaries, GeoJSON, screenshots, and web-ready preview images.
@@ -202,12 +203,11 @@ Possible future extensions include:
 - Cloud-optimized raster delivery
 - Embedded 3D or point-cloud previews
 
-Full point-cloud inspection and 3D visualization are reserved for the next portfolio project.
-
 ## Related Portfolio Projects
 
 - `01_south_florida_qgis_map`
 - `02_photogrammetry`
+- `04_stockpile_volume_analysis`
 
 ## Possible Future Work
 

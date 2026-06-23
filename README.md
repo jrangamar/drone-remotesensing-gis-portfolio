@@ -56,7 +56,7 @@ Project directory:
 
 ### 03 — Interactive Geospatial Viewer
 
-A Python-generated Folium and Leaflet viewer that publishes selected outputs from the earlier projects as a static website.
+A Python-generated Folium and Leaflet viewer that publishes selected outputs from completed projects as a static website.
 
 The project demonstrates:
 
