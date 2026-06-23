@@ -149,6 +149,9 @@ Each project directory contains its own documentation, data organization, script
 - NumPy
 - pandas
 - Matplotlib
+- SciPy
+- Shapely
+- PyProj
 - Python
 - GeoPandas
 - Folium
@@ -185,6 +188,7 @@ This repository currently focuses on:
 - Terrain and surface-product review
 - Interactive geospatial publishing
 - Stockpile volume estimation
+- Plane- and TIN-based surface reconstruction
 - Cross-section analysis
 - Sensitivity testing for modeling assumptions
 
