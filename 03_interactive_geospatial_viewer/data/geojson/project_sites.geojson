@@ -98,6 +98,42 @@
         "type": "Point",
         "coordinates": [13.735, 51.05]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "project_id": "zeebrugge_stockpiles",
+        "name": "Stockpile Volume and Cross-Section Analysis",
+        "project": "Project 04",
+        "tools": "QGIS, Python, Rasterio, NumPy, SciPy, Shapely, PyProj",
+        "inputs": "Public orthomosaic, DSM, and supplied stockpile boundaries",
+        "input_url": "https://github.com/jrangamar/drone-remotesensing-gis-portfolio/tree/main/04_stockpile_volume_analysis",
+        "outputs": "Stockpile height rasters, plane- and TIN-based volume estimates, sensitivity analysis, and cross sections",
+        "repo_path": "Project 04 repo folder",
+        "repo_url": "https://github.com/jrangamar/drone-remotesensing-gis-portfolio/tree/main/04_stockpile_volume_analysis",
+        "preview_images": [
+          {
+            "src": "data/previews/p01_stockpile_height_map.png",
+            "alt": "P01 stockpile height map"
+          },
+          {
+            "src": "data/previews/p01_profile_longitudinal.png",
+            "alt": "P01 longitudinal stockpile profile"
+          },
+          {
+            "src": "data/previews/p02_stockpile_height_map.png",
+            "alt": "P02 stockpile height map"
+          },
+          {
+            "src": "data/previews/p02_profile_longitudinal.png",
+            "alt": "P02 longitudinal stockpile profile"
+          }
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.208, 51.33]
+      }
     }
   ]
 }
