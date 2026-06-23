@@ -115,7 +115,7 @@ Project directory:
 
 ```text
 QGIS mapping and cartography
-      ↓ƒ
+      ↓
 Drone photogrammetry processing
       ↓
 Python and web geospatial publishing
