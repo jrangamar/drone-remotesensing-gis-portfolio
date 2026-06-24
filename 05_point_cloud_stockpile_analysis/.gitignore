@@ -1,0 +1,10 @@
+.venv/
+.DS_Store
+data/raw/
+data/interim/
+*.laz
+*.las
+*.copc.laz
+*.gpkg-shm
+*.gpkg-wal
+*.qmd

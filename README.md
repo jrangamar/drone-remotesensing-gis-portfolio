@@ -1,8 +1,8 @@
 # Drone/Remote Sensing/GIS Portfolio
 
-A portfolio of GIS, photogrammetry, and geospatial web-publishing projects focused on drone imagery, spatial analysis, and reproducible technical workflows.
+A portfolio of GIS, photogrammetry, LiDAR, and geospatial web-publishing projects focused on drone imagery, point clouds, spatial analysis, and reproducible technical workflows.
 
-The projects progress from desktop GIS and cartographic analysis, through photogrammetry processing and interactive web publishing, to raster-based stockpile volume analysis with QGIS and Python.
+The projects progress from desktop GIS and cartographic analysis, through photogrammetry processing and interactive web publishing, to raster- and point-cloud-based stockpile volume analysis with QGIS and Python.
 
 ## Live Interactive Viewer
 
@@ -111,6 +111,38 @@ Project directory:
 04_stockpile_volume_analysis/
 ```
 
+### 05 — Point-Cloud Stockpile Height and Volume Analysis
+
+A QGIS and Python workflow for estimating stockpile volume directly from a public USGS 3DEP LiDAR point cloud at an industrial site in Miami-Dade County.
+
+The project demonstrates:
+
+- LAS/LAZ metadata, classification, return, and 3D inspection
+- Target-stockpile selection and manual toe delineation
+- Review of unreliable supplied ground classification
+- Local floor-control sampling around the stockpile
+- Sloping TIN base-surface reconstruction
+- Point-cloud rasterization and grid alignment
+- Explicit NoData and raster-footprint handling
+- Height-above-base and volume calculation
+- Constant-floor sensitivity testing
+- Point-density and classification QA
+- Longitudinal and transverse profile validation
+- Python plotting of modeled surfaces and original LiDAR samples
+- Final production mapping and reproducible documentation
+
+Primary result:
+
+- **P01 — free-standing stockpile:** 30.85 ft maximum height and **4,237.18 yd³** estimated volume using a sloping TIN base derived from eight surrounding floor-control samples.
+
+A constant-floor comparison produced **4,361.24 yd³**, a difference of **+2.93%** from the preferred estimate. The clipped point cloud had a mean density of approximately **0.88 points/ft²** or **9.5 points/m²**.
+
+Project directory:
+
+```text
+05_point_cloud_stockpile_analysis/
+```
+
 ## Portfolio Progression
 
 ```text
@@ -120,10 +152,12 @@ Drone photogrammetry processing
       ↓
 Python and web geospatial publishing
       ↓
-Raster-based volume analysis, surface reconstruction, and uncertainty checks
+Raster-based volume analysis and surface reconstruction
+      ↓
+Direct LiDAR point-cloud inspection, QA, and volume modeling
 ```
 
-Together, these projects demonstrate a workflow that moves from spatial data preparation and cartography to imagery processing, public-facing presentation, quantitative surface reconstruction, uncertainty analysis, and reproducible technical reporting.
+Together, these projects demonstrate a workflow that moves from spatial data preparation and cartography to imagery processing, public-facing presentation, quantitative surface reconstruction, direct point-cloud analysis, uncertainty testing, and reproducible technical reporting.
 
 ## Repository Structure
 
@@ -133,6 +167,7 @@ GIS_portfolio/
 ├── 02_photogrammetry/
 ├── 03_interactive_geospatial_viewer/
 ├── 04_stockpile_volume_analysis/
+├── 05_point_cloud_stockpile_analysis/
 ├── .github/
 │   └── workflows/
 ├── .gitignore
@@ -145,6 +180,8 @@ Each project directory contains its own documentation, data organization, script
 
 - QGIS
 - GDAL
+- PDAL
+- LAS/LAZ and COPC
 - Rasterio
 - NumPy
 - pandas
@@ -188,11 +225,14 @@ This repository currently focuses on:
 - Terrain and surface-product review
 - Interactive geospatial publishing
 - Stockpile volume estimation
+- LiDAR point-cloud inspection and classification review
+- Point-cloud rasterization and density assessment
 - Plane- and TIN-based surface reconstruction
+- Local base-surface modeling from floor-control samples
 - Cross-section analysis
 - Sensitivity testing for modeling assumptions
 
-Possible future work may explore point-cloud inspection, LiDAR processing, additional remote-sensing methods, and 3D geospatial visualization.
+Possible future work may extend the point-cloud workflow to additional LiDAR terrain and structure analyses, multi-date surface comparison, other remote-sensing methods, and deeper 3D geospatial visualization.
 
 ## Author
 
